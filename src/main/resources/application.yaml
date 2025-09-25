@@ -1,0 +1,57 @@
+spring:
+  application:
+    name: webtoon-service
+  profiles:
+    active: ${ACTIVE_PROFILE:@activeProfiles@}
+  config:
+#    import: file:/app/common-config/spring-boot/${spring.profiles.active}/deployment.properties
+    import: file:C:\\Users\\ICAM\\workspace\\common-config\\spring-boot\\local\\deployment.properties
+logging:
+  level:
+#    com.example.demo: ${LOGGING_LEVEL_APP_DEMO}
+    org.springframework.web: ${LOGGING_LEVEL_APP_WEB}
+    org.springframework.security: ${LOGGING_LEVEL_APP_SECURITY}
+    org.springframework.web.cors: ${LOGGING_LEVEL_APP_WEB_CORS}
+#    io.minio: ${LOGGING_LEVEL_APP_MINIO}
+    org.springframework.jdbc.core: DEBUG
+#    org.hibernate.SQL: DEBUG
+#    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.springframework.batch: ERROR
+    root: ${LOGGING_LEVEL_APP_ROOT}
+server:
+  port: 8085
+  address: 0.0.0.0
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    display-request-duration: true
+    persist-authorization: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, caches
+app:
+  basePath: ${APP_REACT_BASE_PATH}
+  base-flask-path: ${APP_FLASK_BASE_PATH}
+  apiPath: ${APP_API_PATH}
+  privateApiPath: ${APP_PRIVATE_API_PATH}
+  publicApiPath: ${APP_PUBLIC_API_PATH}
+okta:
+  oauth2:
+    issuer: ${OKTA_OAUTH2_ISSUER}
+    client-id: ${OKTA_OAUTH2_CLIENT_ID}
+    client-secret: ${OKTA_OAUTH2_CLIENT_SECRET}
+    audience: ${OKTA_OAUTH2_AUDIENCE}
+    grant-type: ${OKTA_OAUTH2_GRANT_TYPE}
+webtoon:
+  scraping:
+    headless: true
+
+external:
+  storage:
+    base-url: http://localhost:8084/api/v2
