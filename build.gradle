@@ -57,6 +57,9 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-oauth2-client"
     implementation "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
     implementation "org.projectlombok:lombok:${LOMBOK_VERSION}"
+    // Databases
+    implementation 'mysql:mysql-connector-java:8.0.33'
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${SPRING_BOOT_VERSION}"
     // Swagger and OpenAPI
     implementation "io.swagger.core.v3:swagger-annotations:${SWAGGER_ANNOTATIONS_VERSION}"
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${SPRINGDOC_OPENAPI_VERSION}"

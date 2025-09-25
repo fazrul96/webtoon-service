@@ -1,5 +1,7 @@
 package com.webtoon_service.service;
 
+import com.webtoon_service.domain.data.entity.Webtoon;
+import com.webtoon_service.domain.data.entity.WebtoonSource;
 import com.webtoon_service.infrastructure.storage.S3StorageClient;
 import com.webtoon_service.config.WebtoonProviderConfig;
 import com.webtoon_service.infrastructure.scraper.WebtoonScrapingStrategy;
@@ -24,6 +26,7 @@ import static com.webtoon_service.constants.GeneralConstants.*;
 @RequiredArgsConstructor
 public class WebtoonScrapingService {
     private final S3StorageClient storageClient;
+    private final WebtoonService webtoonService;
 
     public List<String> uploadWebtoonChapter(
             WebtoonProviderDto webtoonProviderDto,
@@ -37,7 +40,6 @@ public class WebtoonScrapingService {
                     webtoonProviderDto.getId(),
                     webtoonProviderDto.getSuffix()
             );
-
             WebtoonScrapingStrategy strategy = WebtoonScrapingStrategyFactory.getStrategy(webtoonProviderDto.getId());
             strategy.scrape(driver, provider, title, chapter);
 
@@ -51,6 +53,16 @@ public class WebtoonScrapingService {
             List<String> uploadedUrl = storageClient.uploadFiles(zipFile, s3Prefix)
                     .blockOptional()
                     .orElseThrow(() -> new IllegalStateException("Upload failed"));
+
+            Webtoon webtoon = webtoonService.getOrCreateWebtoon(
+                    title, title.toLowerCase().replace(SINGLE_SPACE, DASH)
+            );
+            WebtoonSource source = webtoonService.getOrCreateSource(
+                    webtoon, provider.getProviderId(), provider.getSuffix()
+            );
+            webtoonService.saveChapter(
+                    source, chapter, uploadedUrl.get(0)
+            );
 
             deleteDirectory(zipFile.getParent());
             return uploadedUrl;

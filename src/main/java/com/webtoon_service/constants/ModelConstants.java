@@ -8,7 +8,6 @@ public final class ModelConstants {
     public static final String TBL_WEBTOON_CHAPTER = "webtoon_chapters";
 
     public static final String ID = "id";
-    public static final String PLAN_ID = "plan_id";
     public static final String ALIAS = "alias";
     public static final String IMAGE = "image";
     public static final String TITLE = "title";
@@ -27,11 +26,6 @@ public final class ModelConstants {
     public static final String TYPE = "type";
     public static final String BANNER_IMAGE = "banner_image";
     public static final String COVER_IMAGE = "cover_image";
-
-    public static final String NAME = "name";
-    public static final String EMAIL = "email";
-    public static final String GOOGLE_ID = "googleId";
-    public static final String AVATAR_URL = "avatarUrl";
 
     public static final String CHAPTER = "chapter";
 
